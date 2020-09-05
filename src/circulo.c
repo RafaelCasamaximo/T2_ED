@@ -28,53 +28,53 @@ Circulo criaCirculo(int id, float r, float x, float y, char* cb, char* cp){
 }
 
 //Setters
-void setId(Circulo circulo, int id){
+void circuloSetId(Circulo circulo, int id){
     CirculoStruct* circ = (CirculoStruct*) circulo;
     circ->id = id;
 }
-void setRaio(Circulo circulo, float r){
+void circuloSetRaio(Circulo circulo, float r){
     CirculoStruct* circ = (CirculoStruct*) circulo;
     circ->r = r;
 }
-void setX(Circulo circulo, float x){
+void circuloSetX(Circulo circulo, float x){
     CirculoStruct* circ = (CirculoStruct*) circulo;
     circ->x = x;
 }
-void setY(Circulo circulo, float y){
+void circuloSetY(Circulo circulo, float y){
     CirculoStruct* circ = (CirculoStruct*) circulo;
     circ->y = y;
 }
-void setCorBorda(Circulo circulo, char cb[]){
+void circuloSetCorBorda(Circulo circulo, char* cb){
     CirculoStruct* circ = (CirculoStruct*) circulo;
-    strcpy(circ->cb, cb);
+    circ->cb = cb;
 }
-void setCorPreenchimento(Circulo circulo, char cp[]){
+void circuloSetCorPreenchimento(Circulo circulo, char* cp){
     CirculoStruct* circ = (CirculoStruct*) circulo;
-    strcpy(circ->cp, cp);
+    circ->cp = cp;
 }
 
 //Getters
-int getId(Circulo circulo){
+int circuloGetId(Circulo circulo){
     CirculoStruct* circ = (CirculoStruct*) circulo;
     return circ->id;
 }
-float getRaio(Circulo circulo){
+float circuloGetRaio(Circulo circulo){
     CirculoStruct* circ = (CirculoStruct*) circulo;
     return circ->r;
 }
-float getX(Circulo circulo){
+float circuloGetX(Circulo circulo){
     CirculoStruct* circ = (CirculoStruct*) circulo;
     return circ->x;
 }
-float getY(Circulo circulo){
+float circuloGetY(Circulo circulo){
     CirculoStruct* circ = (CirculoStruct*) circulo;
     return circ->y;
 }
-char* getCorBorda(Circulo circulo){
+char* circuloGetCorBorda(Circulo circulo){
     CirculoStruct* circ = (CirculoStruct*) circulo;
     return circ->cb;
 }
-char* getCorPreenchimento(Circulo circulo){
+char* circuloGetCorPreenchimento(Circulo circulo){
     CirculoStruct* circ = (CirculoStruct*) circulo;
     return circ->cp;
 }
