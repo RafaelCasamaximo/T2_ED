@@ -25,67 +25,67 @@ Retangulo criaRetangulo(int id, float x, float y, float w, float h, char *cb, ch
     return ret;
 }    
 //Setters
-void setId(Retangulo retangulo, int id){
+void retanguloSetId(Retangulo retangulo, int id){
     RetanguloStruct* ret = (RetanguloStruct*) malloc(sizeof(RetanguloStruct));
     ret->id = id;
 }
 
-void setX(Retangulo retangulo, float x){
+void retanguloSetX(Retangulo retangulo, float x){
     RetanguloStruct* ret = (RetanguloStruct*) malloc(sizeof(RetanguloStruct));
     ret->x = x;
 }
 
-void setY(Retangulo retangulo, float y){
+void retanguloSetY(Retangulo retangulo, float y){
     RetanguloStruct* ret = (RetanguloStruct*) malloc(sizeof(RetanguloStruct));
     ret->y = y;
 }
 
-void setWidth(Retangulo retangulo, float w){
+void retanguloSetWidth(Retangulo retangulo, float w){
     RetanguloStruct* ret = (RetanguloStruct*) malloc(sizeof(RetanguloStruct));
     ret->w = w;
 }
 
-void setHeight(Retangulo retangulo, float h){
+void retanguloSetHeight(Retangulo retangulo, float h){
     RetanguloStruct* ret = (RetanguloStruct*) malloc(sizeof(RetanguloStruct));
     ret->h = h;
 }
 
-void setCorBorda(Retangulo retangulo, char* cb){
+void retanguloSetCorBorda(Retangulo retangulo, char* cb){
     RetanguloStruct* ret = (RetanguloStruct*) malloc(sizeof(RetanguloStruct));
     ret->cb = cb;
 }
 
-void setCorPreenchimento(Retangulo retangulo, char* cp){
+void retanguloSetCorPreenchimento(Retangulo retangulo, char* cp){
     RetanguloStruct* ret = (RetanguloStruct*) malloc(sizeof(RetanguloStruct));
     ret->cp = cp;
 }
 
 //Getters
-int getId(Retangulo retangulo){
+int retanguloGetId(Retangulo retangulo){
     RetanguloStruct *ret = (RetanguloStruct*) retangulo;
     return ret->id;
 }
-float getX(Retangulo retangulo){
+float retanguloGetX(Retangulo retangulo){
     RetanguloStruct *ret = (RetanguloStruct*) retangulo;
     return ret->x;
 }
-float getY(Retangulo retangulo){
+float retanguloGetY(Retangulo retangulo){
     RetanguloStruct *ret = (RetanguloStruct*) retangulo;
     return ret->y;
 }
-float getWidth(Retangulo retangulo){
+float retanguloGetWidth(Retangulo retangulo){
     RetanguloStruct *ret = (RetanguloStruct*) retangulo;
     return ret->w;
 }
-float getHeight(Retangulo retangulo){
+float retanguloGetHeight(Retangulo retangulo){
     RetanguloStruct *ret = (RetanguloStruct*) retangulo;
     return ret->h;
 }
-char* getCorBorda(Retangulo retangulo){
+char* retanguloGetCorBorda(Retangulo retangulo){
     RetanguloStruct *ret = (RetanguloStruct*) retangulo;
     return ret->cb;
 }
-char* getCorPreenchimento(Retangulo retangulo){
+char* retanguloGetCorPreenchimento(Retangulo retangulo){
     RetanguloStruct *ret = (RetanguloStruct*) retangulo;
     return ret->cp;
 }

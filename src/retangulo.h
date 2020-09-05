@@ -6,23 +6,23 @@ typedef void* Retangulo;
 Retangulo criaRetangulo(int id, float x, float y, float w, float h, char* cb, char* cp);
 
 //Setters
-void setId(Retangulo retangulo, int id);
-void setX(Retangulo retangulo, float x);
-void setY(Retangulo retangulo, float y);
-void setWidth(Retangulo retangulo, float w);
-void setHeight(Retangulo retangulo, float h);
-void setCorBorda(Retangulo retangulo, char* cb);
-void setCorPreenchimento(Retangulo retangulo, char* cp);
+void retanguloSetId(Retangulo retangulo, int id);
+void retanguloSetX(Retangulo retangulo, float x);
+void retanguloSetY(Retangulo retangulo, float y);
+void retanguloSetWidth(Retangulo retangulo, float w);
+void retanguloSetHeight(Retangulo retangulo, float h);
+void retanguloSetCorBorda(Retangulo retangulo, char* cb);
+void retanguloSetCorPreenchimento(Retangulo retangulo, char* cp);
 
 
 //Getters
-int getId(Retangulo retangulo);
-float getX(Retangulo retangulo);
-float getY(Retangulo retangulo);
-float getWidth(Retangulo retangulo);
-float getHeight(Retangulo retangulo);
-char* getCorBorda(Retangulo retangulo);
-char* getCorPreenchimento(Retangulo retangulo);
+int retanguloGetId(Retangulo retangulo);
+float retanguloGetX(Retangulo retangulo);
+float retanguloGetY(Retangulo retangulo);
+float retanguloGetWidth(Retangulo retangulo);
+float retanguloGetHeight(Retangulo retangulo);
+char* retanguloGetCorBorda(Retangulo retangulo);
+char* retanguloGetCorPreenchimento(Retangulo retangulo);
 
 
 #endif
