@@ -3,14 +3,14 @@
 #include "hidrante.h"
 
 typedef struct hidrante{
-    int id;
+    char* id;
     float x;
     float y;
 }HidranteStruct;
 
-Hidrante criaHidrante(int id, float x, float y){
+Hidrante criaHidrante(char* id, float x, float y){
     HidranteStruct* hid = (HidranteStruct*) malloc(sizeof(HidranteStruct));
-
+    
     hid->id = id;
     hid->x = x;
     hid->y = y;
@@ -19,7 +19,7 @@ Hidrante criaHidrante(int id, float x, float y){
 }
 
 //Setters
-void hidranteSetId(Hidrante hidrante, int id){
+void hidranteSetId(Hidrante hidrante, char* id){
     HidranteStruct* hid = (HidranteStruct*) hidrante;
     hid->id = id;
 }
@@ -33,7 +33,7 @@ void hidranteSetY(Hidrante hidrante, float y){
 }
 
 //Getters
-int hidranteGetId(Hidrante hidrante){
+char* hidranteGetId(Hidrante hidrante){
     HidranteStruct* hid = (HidranteStruct*) hidrante;
     return hid->id;
 }

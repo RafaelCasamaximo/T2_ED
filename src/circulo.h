@@ -14,8 +14,8 @@ void circuloSetId(Circulo circulo, int id);
 void circuloSetRaio(Circulo circulo, float r);
 void circuloSetX(Circulo circulo, float x);
 void circuloSetY(Circulo circulo, float y);
-void circuloSetCorBorda(Circulo circulo, char cb[]);
-void circuloSetCorPreenchimento(Circulo circulo, char cp[]);
+void circuloSetCorBorda(Circulo circulo, char* cb);
+void circuloSetCorPreenchimento(Circulo circulo, char* cp);
 
 //Getters
 int circuloGetId(Circulo circulo);

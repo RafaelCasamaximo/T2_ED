@@ -3,15 +3,15 @@
 
 typedef void* Hidrante;
 
-Hidrante criaHidrante(int id, float x, float y);
+Hidrante criaHidrante(char* id, float x, float y);
 
 //Setters
-void hidranteSetId(Hidrante hidrante, int id);
+void hidranteSetId(Hidrante hidrante, char* id);
 void hidranteSetX(Hidrante hidrante, float x);
 void hidranteSetY(Hidrante hidrante, float y);
 
 //Getters
-int hidranteGetId(Hidrante hidrante);
+char* hidranteGetId(Hidrante hidrante);
 float hidranteGetX(Hidrante hidrante);
 float hidranteGetY(Hidrante hidrante);
 
