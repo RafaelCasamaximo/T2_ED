@@ -40,17 +40,11 @@ void insert(Lista lista, Info info){
     lis->ultimo = nod;
 }
 
-/*
-void print(Lista lista){
-    ListaStruct* lis = (ListaStruct*) lista;
-    NodeStruct* aux = lis->primeiro;
 
-    while(aux->prox != NULL){
-        printf("%d", aux);
-        aux = aux->prox;
-    }
+Info getInfo(Node node){
+    NodeStruct* nod = (NodeStruct*) node;
+    return nod->info;
 }
-*/
 
 Node getFirst(Lista lista){
     ListaStruct* lis = (ListaStruct*) lista;
@@ -119,6 +113,29 @@ void insertBefore(Lista lista, Node node, Info info){
     }
 }
 
+void removeNode(Lista lista, Node node){
+    ListaStruct* lis = (ListaStruct*) lista;
+    NodeStruct* nod = (NodeStruct*) node;
+
+    //Se for o primeiro 
+    if(nod->ant == NULL){
+        lis->primeiro = nod->prox;
+    }
+    else{
+        nod->ant->prox = nod->prox;
+    }
+
+    if(nod->prox == NULL){
+        lis->ultimo = nod->ant;
+    }
+    else{
+        nod->prox->ant = nod->ant;
+    }
+
+    free(getInfo(nod));
+    free(nod);
+}
+
 void removeList(Lista lista){
     ListaStruct* lis = (ListaStruct*) lista;
     NodeStruct* inicio = lis->primeiro;
@@ -126,18 +143,9 @@ void removeList(Lista lista){
     NodeStruct *aux;
     while(inicio != NULL){
         aux = inicio;
-        inicio = inicio->prox; //seria equivalente usar nod = aux->prox ?
+        inicio = inicio->prox;
+        free(getInfo(aux));
         free(aux);
     }
 
 }
-
-
-/*
-    removeNode()
-    removeList()
-*/
-
-
-
-
