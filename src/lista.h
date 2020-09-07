@@ -15,18 +15,10 @@ Node getLast(Lista lista);
 Node getNext(Node node);
 Node getPrevious(Node node);
 
-/*
-    Lista create();
-    void insert(Lista l, int info);
-    void print(Lista l);
-    insertAfter()
-    insertBefore()
-    getFirst()
-    getLast()
-    getNext()
-    getPrevious()
-*/
+void insertAfter(Lista lista, Node node, Info info);
+void insertBefore(Lista lista, Node node, Info info);
 
+void removeList(Lista lista);
 
 
 #endif

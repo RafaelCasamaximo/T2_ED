@@ -24,20 +24,20 @@ Lista create(){
 
 void insert(Lista lista, Info info){
     ListaStruct* lis = (ListaStruct*) lista;
-    NodeStruct* node = (NodeStruct*) malloc(sizeof(NodeStruct));
-    node->info = info;
+    NodeStruct* nod = (NodeStruct*) malloc(sizeof(NodeStruct));
+    nod->info = info;
 
     if(lis->primeiro == NULL){
-        lis->primeiro = node;
-        node->ant = NULL;
+        lis->primeiro = nod;
+        nod->ant = NULL;
         //prox = NULL
     }
     else{
-        lis->ultimo->prox = node;
-        node->ant = lis->ultimo;
+        lis->ultimo->prox = nod;
+        nod->ant = lis->ultimo;
     }
-    node->prox = NULL;
-    lis->ultimo = node;
+    nod->prox = NULL;
+    lis->ultimo = nod;
 }
 
 /*
@@ -69,16 +69,71 @@ Node getNext(Node node){
 }
 
 Node getPrevious(Node node){
-    NodeStruct *nod = (NodeStruct*) node;
+    NodeStruct* nod = (NodeStruct*) node;
     return nod->ant;
 }
 
 
+void insertAfter(Lista lista, Node node, Info info){
+    ListaStruct* lis = (ListaStruct*) lista;
+    NodeStruct* nod = (NodeStruct*) node;
+
+    NodeStruct* novo = (NodeStruct*) malloc(sizeof(NodeStruct));
+    novo->info = info;
+
+    if(nod->prox == NULL){
+        nod->prox = novo;
+        novo->prox = NULL;
+        novo->ant = nod;
+        lis->ultimo = novo;
+    }
+    else{
+        NodeStruct* aux = nod->prox;
+        nod->prox = novo;
+        novo->prox = aux;
+        novo->ant = nod;
+        aux->ant = novo;
+    }
+
+}
+
+void insertBefore(Lista lista, Node node, Info info){
+    ListaStruct* lis = (ListaStruct*) lista;
+    NodeStruct *nod = (NodeStruct*) node;
+
+    NodeStruct* novo = (NodeStruct*) malloc(sizeof(NodeStruct));
+    novo->info = info;
+
+    if(nod->ant == NULL){
+        nod->ant = novo;
+        novo->prox = nod;
+        novo->ant = NULL;
+        lis->primeiro = novo;
+    }
+    else{
+        NodeStruct* aux = nod->ant;
+        nod->ant = novo;
+        novo->prox = nod;
+        novo->ant = aux;
+        aux->prox = novo;
+    }
+}
+
+void removeList(Lista lista){
+    ListaStruct* lis = (ListaStruct*) lista;
+    NodeStruct* inicio = lis->primeiro;
+
+    NodeStruct *aux;
+    while(inicio != NULL){
+        aux = inicio;
+        inicio = inicio->prox; //seria equivalente usar nod = aux->prox ?
+        free(aux);
+    }
+
+}
 
 
 /*
-    insertAfter()
-    insertBefore()
     removeNode()
     removeList()
 */
