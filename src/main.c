@@ -7,7 +7,10 @@
 #include "parametros.h"
 #include "trataString.h"
 #include "lista.h"
+#include "texto.h"
 #include "leituraGeo.h"
+
+enum LISTAS{CIRCULO, RETANGULO, TEXTO, LINHA, QUADRA, HIDRANTE, SEMAFORO, RADIOBASE};
 
 
 int main(int argc, char* argv[]){
@@ -49,6 +52,12 @@ int main(int argc, char* argv[]){
     readGeo(listas, dirGeo);
 
     for(int i = 0; i < 8; i++){
+        if(i == TEXTO){
+            for(Node aux = getFirst(listas[TEXTO]); aux != NULL; aux = getNext(aux)){
+                Info auxInfo = getInfo(aux);
+                textoDeletaTexto(auxInfo);
+            }
+        }
         removeList(listas[i]);
     }
 

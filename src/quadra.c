@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "quadra.h"
 
 typedef struct quadra{
-    char* cep;
+    char cep[20];
     float x;
     float y;
     float w;
@@ -13,7 +14,7 @@ typedef struct quadra{
 Quadra criaQuadra(char* cep, float x, float y, float w, float h){
     QuadraStruct* qad = (QuadraStruct*) malloc(sizeof(QuadraStruct));
 
-    qad->cep = cep;
+    strcpy(qad->cep, cep);
     qad->x = x;
     qad->y = y;
     qad->w = w;
@@ -25,7 +26,7 @@ Quadra criaQuadra(char* cep, float x, float y, float w, float h){
 //Setters
 void quadraSetCep(Quadra quadra, char* cep){
     QuadraStruct* qad = (QuadraStruct*) quadra;
-    qad->cep = cep;
+    strcpy(qad->cep, cep);
 }
 void quadraSetX(Quadra quadra, float x){
     QuadraStruct* qad = (QuadraStruct*) quadra;

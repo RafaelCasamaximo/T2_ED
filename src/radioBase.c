@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "radioBase.h"
 
 typedef struct radiobase{
-    char* id;
+    char id[20];
     float x;
     float y;
 }RadioBaseStruct;
@@ -11,7 +12,7 @@ typedef struct radiobase{
 RadioBase criaRadioBase(char* id, float x, float y){
     RadioBaseStruct* radio = (RadioBaseStruct*) malloc(sizeof(RadioBaseStruct));
 
-    radio->id = id;
+    strcpy(radio->id, id);
     radio->x = x;
     radio->y = y;
 
@@ -21,7 +22,7 @@ RadioBase criaRadioBase(char* id, float x, float y){
 //Setters
 void radioBaseSetId(RadioBase radiobase, char* id){
     RadioBaseStruct* radio = (RadioBaseStruct*) radiobase;
-    radio->id = id;
+    strcpy(radio->id, id);
 }
 void radioBaseSetX(RadioBase radiobase, float x){
     RadioBaseStruct* radio = (RadioBaseStruct*) radiobase;

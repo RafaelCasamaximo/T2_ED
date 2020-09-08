@@ -9,8 +9,8 @@ typedef struct circulo{
     float r;
     float x;
     float y;
-    char* cb;
-    char* cp;
+    char cb[22];
+    char cp[22];
 }CirculoStruct;
 
 Circulo criaCirculo(int id, float r, float x, float y, char* cb, char* cp){
@@ -20,9 +20,8 @@ Circulo criaCirculo(int id, float r, float x, float y, char* cb, char* cp){
     circ->r = r;
     circ->x = x;
     circ->y = y;
-    circ->cb = cb;
-    circ->cp = cp;
-
+    strcpy(circ->cb, cb);
+    strcpy(circ->cp, cp);
     
     return circ;
 }
@@ -46,11 +45,11 @@ void circuloSetY(Circulo circulo, float y){
 }
 void circuloSetCorBorda(Circulo circulo, char* cb){
     CirculoStruct* circ = (CirculoStruct*) circulo;
-    circ->cb = cb;
+    strcpy(circ->cb, cb);
 }
 void circuloSetCorPreenchimento(Circulo circulo, char* cp){
     CirculoStruct* circ = (CirculoStruct*) circulo;
-    circ->cp = cp;
+    strcpy(circ->cp, cp);
 }
 
 //Getters

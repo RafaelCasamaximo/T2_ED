@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "hidrante.h"
 
 typedef struct hidrante{
-    char* id;
+    char id[20];
     float x;
     float y;
 }HidranteStruct;
@@ -11,7 +12,7 @@ typedef struct hidrante{
 Hidrante criaHidrante(char* id, float x, float y){
     HidranteStruct* hid = (HidranteStruct*) malloc(sizeof(HidranteStruct));
     
-    hid->id = id;
+    strcpy(hid->id, id);
     hid->x = x;
     hid->y = y;
 
@@ -21,7 +22,7 @@ Hidrante criaHidrante(char* id, float x, float y){
 //Setters
 void hidranteSetId(Hidrante hidrante, char* id){
     HidranteStruct* hid = (HidranteStruct*) hidrante;
-    hid->id = id;
+    strcpy(hid->id, id);
 }
 void hidranteSetX(Hidrante hidrante, float x){
     HidranteStruct* hid = (HidranteStruct*) hidrante;

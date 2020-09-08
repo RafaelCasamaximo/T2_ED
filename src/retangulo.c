@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "retangulo.h"
 
 typedef struct retangulo{
@@ -8,8 +9,8 @@ typedef struct retangulo{
     float y;
     float w;
     float h;
-    char* cb;
-    char* cp;
+    char cb[22];
+    char cp[22];
 }RetanguloStruct;
 
 Retangulo criaRetangulo(int id, float x, float y, float w, float h, char* cb, char* cp){
@@ -19,8 +20,8 @@ Retangulo criaRetangulo(int id, float x, float y, float w, float h, char* cb, ch
     ret->y = y;
     ret->w = w;
     ret->h = h;
-    ret->cb = cb;
-    ret->cp = cp;
+    strcpy(ret->cb, cb);
+    strcpy(ret->cp, cp);
     
     return ret;
 }    
@@ -53,12 +54,12 @@ void retanguloSetHeight(Retangulo retangulo, float h){
 
 void retanguloSetCorBorda(Retangulo retangulo, char* cb){
     RetanguloStruct* ret = (RetanguloStruct*) retangulo;
-    ret->cb = cb;
+    strcpy(ret->cb, cb);
 }
 
 void retanguloSetCorPreenchimento(Retangulo retangulo, char* cp){
     RetanguloStruct* ret = (RetanguloStruct*) retangulo;
-    ret->cp = cp;
+    strcpy(ret->cp, cp);
 }
 
 //Getters
