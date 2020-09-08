@@ -8,7 +8,6 @@ typedef void* Info;
 Lista create();
 
 void insert(Lista lista, Info info);
-void print(Lista lista);
 
 Info getInfo(Node node);
 

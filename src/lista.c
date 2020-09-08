@@ -147,5 +147,5 @@ void removeList(Lista lista){
         free(getInfo(aux));
         free(aux);
     }
-
+    free(lis);
 }
