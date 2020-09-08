@@ -13,6 +13,7 @@
 #include "semaforo.h"
 #include "radioBase.h"
 #include "lista.h"
+#include "corPadrao.h"
 
 enum LISTAS{CIRCULO, RETANGULO, TEXTO, LINHA, QUADRA, HIDRANTE, SEMAFORO, RADIOBASE};
 
@@ -25,7 +26,7 @@ typedef struct nx{
 }Nx;
 
 
-void readGeo(Lista* listas, char* dirGeo){
+void readGeo(Lista* listas, char* dirGeo, CorPadrao cores){
     FILE* fileGeo = NULL;
     fileGeo = fopen(dirGeo, "r");
     if(!fileGeo){
@@ -41,7 +42,7 @@ void readGeo(Lista* listas, char* dirGeo){
      dft.ns = 1000;
      dft.nr = 1000;
 
-    // //Quantidade atual de Elementos em cada lista
+    //Quantidade atual de Elementos em cada lista
      Nx atual;
      atual.i = 0;
      atual.nq = 0;
@@ -53,22 +54,28 @@ void readGeo(Lista* listas, char* dirGeo){
     char comando[3];
     int id;
     float r, x, y, w, h;
-    char cep[22];
+    char cep[20];
     char cb[22];
     char cp[22];
     char* txt = NULL;
     char buffer;
     int bufferSize = 0;
 
-     Circulo circuloAux = NULL;
-     Retangulo retanguloAux = NULL;
-     Quadra quadraAux = NULL;
-     Hidrante hidranteAux = NULL;
-     Semaforo semaforoAux = NULL;
-     RadioBase radiobaseAux = NULL;
-     Texto textoAux = NULL;
+    char sw[22];
+    char cw[22];
+    char rw[22];
+    char cfill[22];
+    char cstrk[22];
 
-     while(1){
+    Circulo circuloAux = NULL;
+    Retangulo retanguloAux = NULL;
+    Quadra quadraAux = NULL;
+    Hidrante hidranteAux = NULL;
+    Semaforo semaforoAux = NULL;
+    RadioBase radiobaseAux = NULL;
+    Texto textoAux = NULL;
+
+    while(1){
         fscanf(fileGeo, "%s", comando);
 
         if(feof(fileGeo)){
@@ -145,7 +152,7 @@ void readGeo(Lista* listas, char* dirGeo){
         }
         
         //Comando: s
-        if(strcmp(comando, "s") == 0){
+        else if(strcmp(comando, "s") == 0){
             fscanf(fileGeo, "%s %f %f", cep, &x, &y);
 
             if(atual.ns < dft.ns){
@@ -156,7 +163,7 @@ void readGeo(Lista* listas, char* dirGeo){
         }
         
         //Comando: rb
-        if(strcmp(comando, "rb") == 0){
+        else if(strcmp(comando, "rb") == 0){
            fscanf(fileGeo, "%s %f %f", cep, &x, &y);
 
             if(atual.nr < dft.nr){
@@ -166,27 +173,41 @@ void readGeo(Lista* listas, char* dirGeo){
             }   
         }
         
-        // //Comando: cq
-        // if(strcmp(comando, "cq") == 0){
-
-        // }
+        //Comando: cq
+        else if(strcmp(comando, "cq") == 0){
+            fscanf(fileGeo, "%s %s %s", sw, cfill, cstrk);
+            coresPadraoSetPreenchimentoQuadras(cores, cfill);
+            coresPadraoSetBordaQuadras(cores, cstrk);
+            coresPadraoSetEspessuraQuadras(cores, sw);
+        }
         
-        // //Comando: ch
-        // if(strcmp(comando, "ch") == 0){
-
-        // }
-        // //Comando: cr
-        // if(strcmp(comando, "cr") == 0){
-
-        // }
-        // //Comando: cs
-        // if(strcmp(comando, "cs") == 0){
-
-        // }
-        // //Comando: sw
-        // if(strcmp(comando, "sw") == 0){
-
-        // }
+        //Comando: ch
+        else if(strcmp(comando, "ch") == 0){
+            fscanf(fileGeo, "%s %s %s", sw, cfill, cstrk);
+            coresPadraoSetPreenchimentoHidrantes(cores, cfill);
+            coresPadraoSetBordaHidrantes(cores, cstrk);
+            coresPadraoSetEspessuraHidrantes(cores, sw);
+        }
+        //Comando: cr
+        else if(strcmp(comando, "cr") == 0){
+            fscanf(fileGeo, "%s %s %s", sw, cfill, cstrk);
+            coresPadraoSetPreenchimentoRadioBases(cores, cfill);
+            coresPadraoSetBordaRadioBases(cores, cstrk);
+            coresPadraoSetEspessuraRadioBases(cores, sw);
+        }
+        //Comando: cs
+        else if(strcmp(comando, "cs") == 0){
+            fscanf(fileGeo, "%s %s %s", sw, cfill, cstrk);
+            coresPadraoSetPreenchimentoSemaforos(cores, cfill);
+            coresPadraoSetBordaSemaforos(cores, cstrk);
+            coresPadraoSetEspessuraSemaforos(cores, sw);
+        }
+        //Comando: sw
+        else if(strcmp(comando, "sw") == 0){
+            fscanf(fileGeo, "%s %s", cw, rw);
+            coresPadraoSetEspessuraCirculos(cores, cw);
+            coresPadraoSetEspessuraRetangulos(cores, rw);
+        }
 
     }
 

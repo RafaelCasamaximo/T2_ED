@@ -9,11 +9,13 @@
 #include "lista.h"
 #include "texto.h"
 #include "leituraGeo.h"
+#include "svg.h"
+#include "corPadrao.h"
 
 enum LISTAS{CIRCULO, RETANGULO, TEXTO, LINHA, QUADRA, HIDRANTE, SEMAFORO, RADIOBASE};
 
-
 int main(int argc, char* argv[]){
+    CorPadrao cores = criaCorPadrao();
 
     char* dirEntrada = NULL;
     char* arqGeo = NULL;
@@ -22,7 +24,12 @@ int main(int argc, char* argv[]){
 
     //Armazena dirEntrada + arqGeo
     char* dirGeo = NULL;
+    //Armazena nome do arquivo.geo
+    char* nomeArquivoGeo = NULL;
+    //Armazena o caminho de saido do arquivo.geo (-o + nomeArquivoGeo)
+    char* saidaSvgGeo = NULL;
 
+    //Realiza a leitura dos parâmetros
     for(int i = 1; argc > i; i++){     
         if(strcmp(argv[i], "-e") == 0){     
             dirEntrada = buscaParametros(argv, i);
@@ -39,6 +46,7 @@ int main(int argc, char* argv[]){
         i++;
     }
 
+    //Verifica se os parâmetros essenciais estão inseridos
     verificaExecucao(arqGeo, dirSaida);
 
     //Cria Listas
@@ -49,13 +57,17 @@ int main(int argc, char* argv[]){
     
     //Refatorar trataString para retornar char*
     concatenaCaminhos(dirEntrada, arqGeo, &dirGeo);
-    readGeo(listas, dirGeo);
+    readGeo(listas, dirGeo, cores);
+
+
+    getNomeConcatExtension(arqGeo, ".svg", &nomeArquivoGeo);
+    concatenaCaminhos(dirSaida, nomeArquivoGeo, &saidaSvgGeo);
+    desenhaSvgGeo(listas, cores, saidaSvgGeo);
 
     for(int i = 0; i < 8; i++){
         if(i == TEXTO){
             for(Node aux = getFirst(listas[TEXTO]); aux != NULL; aux = getNext(aux)){
-                Info auxInfo = getInfo(aux);
-                textoDeletaTexto(auxInfo);
+                textoDeletaTexto(getInfo(aux));
             }
         }
         removeList(listas[i]);
@@ -67,5 +79,11 @@ int main(int argc, char* argv[]){
     free(dirSaida);
 
     free(dirGeo);
+
+    free(nomeArquivoGeo);
+    free(saidaSvgGeo);
+
+
+    free(cores);
     return 0;
 }
