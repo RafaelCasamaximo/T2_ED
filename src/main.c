@@ -9,14 +9,15 @@
 #include "lista.h"
 #include "texto.h"
 #include "leituraGeo.h"
+#include "leituraQry.h"
 #include "svg.h"
 #include "corPadrao.h"
 
 enum LISTAS{CIRCULO, RETANGULO, TEXTO, LINHA, QUADRA, HIDRANTE, SEMAFORO, RADIOBASE};
 
 int main(int argc, char* argv[]){
-    CorPadrao cores = criaCorPadrao();
-
+    CorPadrao cores = criaCorPadrao("2", "coral", "saddlebrown", "2", "red", "darkred", "2", "deeppink", "mediumvioletred", "2", "green", "red", "2", "2");
+    
     char* dirEntrada = NULL;
     char* arqGeo = NULL;
     char* arqQry = NULL;
@@ -28,6 +29,8 @@ int main(int argc, char* argv[]){
     char* nomeArquivoGeo = NULL;
     //Armazena o caminho de saido do arquivo.geo (-o + nomeArquivoGeo)
     char* saidaSvgGeo = NULL;
+    //Armazenar o caminho do arquivo.qry
+    char* dirQry = NULL;
 
     //Realiza a leitura dos parâmetros
     for(int i = 1; argc > i; i++){     
@@ -59,12 +62,18 @@ int main(int argc, char* argv[]){
     concatenaCaminhos(dirEntrada, arqGeo, &dirGeo);
     readGeo(listas, dirGeo, cores);
 
-
     getNomeConcatExtension(arqGeo, ".svg", &nomeArquivoGeo);
     concatenaCaminhos(dirSaida, nomeArquivoGeo, &saidaSvgGeo);
     desenhaSvgGeo(listas, cores, saidaSvgGeo);
 
+    if(arqQry != NULL){
+        concatenaCaminhos(dirEntrada, arqQry, &dirQry);
+        readQry(listas, dirQry, cores);
+    }
+
+    //Deleta todas as listas
     for(int i = 0; i < 8; i++){
+        //Caso a lista seja uma lista de texto, deleta todos os textos alocados
         if(i == TEXTO){
             for(Node aux = getFirst(listas[TEXTO]); aux != NULL; aux = getNext(aux)){
                 textoDeletaTexto(getInfo(aux));
@@ -79,10 +88,10 @@ int main(int argc, char* argv[]){
     free(dirSaida);
 
     free(dirGeo);
+    free(dirQry);
 
     free(nomeArquivoGeo);
     free(saidaSvgGeo);
-
 
     free(cores);
     return 0;

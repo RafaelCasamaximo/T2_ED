@@ -20,7 +20,7 @@ void desenhaSvgGeo(Lista* listas, CorPadrao cores, char* dirSaida){
     if(!fileSvgGeo){
         exit(1);
     }
-    printf("Arquivo criado com sucesso!");
+    printf("Arquivo SVG GEO criado com sucesso!");
 
     /*
     1 - QUADRA
@@ -30,30 +30,30 @@ void desenhaSvgGeo(Lista* listas, CorPadrao cores, char* dirSaida){
     5 - TEXTO
     */
 
-    fprintf(fileSvgGeo, "<svg>\n");
+    fprintf(fileSvgGeo, "<svg>");
 
     for(Node aux = getFirst(listas[QUADRA]); aux != NULL; aux = getNext(aux)){
-        fprintf(fileSvgGeo, "\n<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" style=\"fill:%s;stroke:%s;stroke-widht:%s\"/>", quadraGetX(aux), quadraGetY(aux), quadraGetWidth(aux), quadraGetHeight(aux), coresPadraoGetPreenchimentoQuadras(cores), coresPadraoGetBordaQuadras(cores), coresPadraoGetEspessuraQuadras(cores));
+        fprintf(fileSvgGeo, "\n<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" style=\"fill:%s;stroke:%s;stroke-widht:%s\"/>", quadraGetX(getInfo(aux)), quadraGetY(getInfo(aux)), quadraGetWidth(getInfo(aux)), quadraGetHeight(getInfo(aux)), coresPadraoGetPreenchimentoQuadras(cores), coresPadraoGetBordaQuadras(cores), coresPadraoGetEspessuraQuadras(cores));
     }   
     for(Node aux = getFirst(listas[SEMAFORO]); aux != NULL; aux = getNext(aux)){
-        fprintf(fileSvgGeo, "\n<circle cx=\"%f\" cy=\"%f\" r=1 style=\"fill:%s;stroke:%s;stroke-widht:%s\"/>", semaforoGetX(aux), semaforoGetY(aux), coresPadraoGetPreenchimentoSemaforos(cores), coresPadraoGetBordaSemaforos(cores), coresPadraoGetEspessuraSemaforos(cores));
+        fprintf(fileSvgGeo, "\n<circle cx=\"%f\" cy=\"%f\" r=\"1\" style=\"fill:%s;stroke:%s;stroke-widht:%s\"/>", semaforoGetX(getInfo(aux)), semaforoGetY(getInfo(aux)), coresPadraoGetPreenchimentoSemaforos(cores), coresPadraoGetBordaSemaforos(cores), coresPadraoGetEspessuraSemaforos(cores));
     }
     for(Node aux = getFirst(listas[HIDRANTE]); aux != NULL; aux = getNext(aux)){
-        fprintf(fileSvgGeo, "\n<circle cx=\"%f\" cy=\"%f\" r=1 style=\"fill:%s;stroke:%s;stroke-widht:%s\"/>", hidranteGetX(aux), hidranteGetY(aux), coresPadraoGetPreenchimentoHidrantes(cores), coresPadraoGetBordaHidrantes(cores), coresPadraoGetEspessuraHidrantes(cores));
+        fprintf(fileSvgGeo, "\n<circle cx=\"%f\" cy=\"%f\" r=\"1\" style=\"fill:%s;stroke:%s;stroke-widht:%s\"/>", hidranteGetX(getInfo(aux)), hidranteGetY(getInfo(aux)), coresPadraoGetPreenchimentoHidrantes(cores), coresPadraoGetBordaHidrantes(cores), coresPadraoGetEspessuraHidrantes(cores));
     }
     for(Node aux = getFirst(listas[RADIOBASE]); aux != NULL; aux = getNext(aux)){
-        fprintf(fileSvgGeo, "\n<circle cx=\"%f\" cy=\"%f\" r=1 style=\"fill:%s;stroke:%s;stroke-widht:%s\"/>",radioBaseGetX(aux), radioBaseGetY(aux), coresPadraoGetPreenchimentoHidrantes(cores), coresPadraoGetBordaHidrantes(cores), coresPadraoGetEspessuraHidrantes(cores));
+        fprintf(fileSvgGeo, "\n<circle cx=\"%f\" cy=\"%f\" r=\"1\" style=\"fill:%s;stroke:%s;stroke-widht:%s\"/>",radioBaseGetX(getInfo(aux)), radioBaseGetY(getInfo(aux)), coresPadraoGetPreenchimentoHidrantes(cores), coresPadraoGetBordaHidrantes(cores), coresPadraoGetEspessuraHidrantes(cores));
     }
     for(Node aux = getFirst(listas[RETANGULO]); aux != NULL; aux = getNext(aux)){
-        fprintf(fileSvgGeo, "\n<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" style=\"fill:%s;stroke:%s;stroke-widht:%s\"/>", retanguloGetX(aux), retanguloGetY(aux), retanguloGetWidth(aux), retanguloGetHeight(aux), retanguloGetCorBorda(aux), retanguloGetCorPreenchimento(aux), coresPadraoGetEspessuraRetangulos(cores));
+        fprintf(fileSvgGeo, "\n<rect x=\"%f\" y=\"%f\" width=\"%f\" height=\"%f\" style=\"fill:%s;stroke:%s;stroke-widht:%s\"/>", retanguloGetX(getInfo(aux)), retanguloGetY(getInfo(aux)), retanguloGetWidth(getInfo(aux)), retanguloGetHeight(getInfo(aux)), retanguloGetCorBorda(getInfo(aux)), retanguloGetCorPreenchimento(getInfo(aux)), coresPadraoGetEspessuraRetangulos(cores));
     } 
     for(Node aux = getFirst(listas[CIRCULO]); aux != NULL; aux = getNext(aux)){
-        fprintf(fileSvgGeo, "\n<circle cx=\"%f\" cy=\"%f\" r=\"%f\" style=\"fill:%s;stroke:%s;stroke-widht:%s\"/>", circuloGetX(aux), circuloGetY(aux), circuloGetRaio(aux), circuloGetCorBorda(aux), circuloGetCorPreenchimento(aux), coresPadraoGetEspessuraCirculos(cores));
+        fprintf(fileSvgGeo, "\n<circle cx=\"%f\" cy=\"%f\" r=\"%f\" style=\"fill:%s;stroke:%s;stroke-widht:%s\"/>", circuloGetX(getInfo(aux)), circuloGetY(getInfo(aux)), circuloGetRaio(getInfo(aux)), circuloGetCorBorda(getInfo(aux)), circuloGetCorPreenchimento(getInfo(aux)), coresPadraoGetEspessuraCirculos(cores));
     }
     for(Node aux = getFirst(listas[TEXTO]); aux != NULL; aux = getNext(aux)){
-        fprintf(fileSvgGeo, "\n<text x=\"%f\" y=\"%f\" fill=\"%s\" stroke=\"%s\" stroke-width=\"0.5\">%s</text>", textoGetX(aux), textoGetY(aux), textoGetCorBorda(aux), textoGetCorPreenchimento(aux), textoGetTexto(aux));
+        fprintf(fileSvgGeo, "\n<text x=\"%f\" y=\"%f\" fill=\"%s\" stroke=\"%s\" stroke-width=\"0.5\">%s</text>", textoGetX(getInfo(aux)), textoGetY(getInfo(aux)), textoGetCorBorda(getInfo(aux)), textoGetCorPreenchimento(getInfo(aux)), textoGetTexto(getInfo(aux)));
     }
 
     fprintf(fileSvgGeo, "\n</svg>");
-    
+    fclose(fileSvgGeo);
 }

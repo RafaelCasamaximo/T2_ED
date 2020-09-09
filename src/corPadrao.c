@@ -18,8 +18,27 @@ typedef struct corPadrao{
 
 }CorPadraoStruct;
 
-CorPadrao criaCorPadrao(){
+CorPadrao criaCorPadrao(char* quadraSw, char* quadraCfill, char* quadraCstrk, char* hidranteSw, char* hidranteCfill, char* hidranteCstrk, char* radioBaseSw, char* radioBaseCfill, char* radioBaseCstrk, char* semaforoSw, char* semaforoCfill, char* semaforoCstrk, char* circuloSw, char* retanguloSw){
     CorPadraoStruct* cor = (CorPadraoStruct*) malloc(sizeof(CorPadraoStruct));
+    strcpy(cor->quadraSw, quadraSw);
+    strcpy(cor->quadraCfill, quadraCfill);
+    strcpy(cor->quadraCstrk, quadraCstrk);
+    
+    strcpy(cor->hidranteSw, hidranteSw);
+    strcpy(cor->hidranteCfill, hidranteCfill);
+    strcpy(cor->hidranteCstrk, hidranteCstrk);
+    
+    strcpy(cor->radioBaseSw, radioBaseSw);
+    strcpy(cor->radioBaseCfill, radioBaseCfill);
+    strcpy(cor->radioBaseCstrk, radioBaseCstrk);
+    
+    strcpy(cor->semaforoSw, semaforoSw);
+    strcpy(cor->semaforoCfill, semaforoCfill);
+    strcpy(cor->semaforoCstrk, semaforoCstrk);
+    
+    strcpy(cor->circuloSw, circuloSw);
+    strcpy(cor->retanguloSw, retanguloSw);
+    
     return cor;
 }
 
@@ -85,8 +104,6 @@ void coresPadraoSetEspessuraRetangulos(CorPadrao corPadrao, char* sw){
     CorPadraoStruct* cor = (CorPadraoStruct*) corPadrao;
     strcpy(cor->retanguloSw, sw);
 }
-
-
 
 
 //Getters

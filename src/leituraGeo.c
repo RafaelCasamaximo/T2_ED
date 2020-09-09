@@ -32,7 +32,7 @@ void readGeo(Lista* listas, char* dirGeo, CorPadrao cores){
     if(!fileGeo){
         exit(1);
     }
-    printf("Arquivo aberto com sucesso!");
+    printf("Arquivo GEO aberto com sucesso!");
 
     //Numeros maximos de Elementos em cada lista;
      Nx dft;

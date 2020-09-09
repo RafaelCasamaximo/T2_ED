@@ -3,7 +3,7 @@
 
 typedef void* CorPadrao;
 
-CorPadrao criaCorPadrao();
+CorPadrao criaCorPadrao(char* quadraSw, char* quadraCfill, char* quadraCstrk, char* hidranteSw, char* hidranteCfill, char* hidranteCstrk, char* radioBaseSw, char* radioBaseCfill, char* radioBaseCstrk, char* semaforoSw, char* semaforoCfill, char* semaforoCstrk, char* circuloSw, char* retanguloSw);
 
 //Setters
 void coresPadraoSetPreenchimentoQuadras(CorPadrao corPadrao, char* cfill);
