@@ -307,3 +307,107 @@ void del(Lista* listas, char* cep){
         }
     }
 }
+
+void cbq(Lista* listas, float x, float y, float r, char* cb){
+    float xQuadra = 0, yQuadra = 0, wQuadra = 0, hQuadra = 0;
+    
+    for(Node aux = getFirst(listas[QUADRA]); aux != NULL; aux = getNext(aux)){
+        xQuadra = quadraGetX(getInfo(aux));
+        yQuadra = quadraGetY(getInfo(aux));
+        wQuadra = quadraGetWidth(getInfo(aux));
+        hQuadra = quadraGetHeight(getInfo(aux));
+
+        /*
+        x,y 
+        x + w, y
+        x, y + h
+        x + w, y + h
+        */
+        int insideP1 = insideCirculo(xQuadra, yQuadra, x, y, r);
+        int insideP2 = insideCirculo(xQuadra + wQuadra, yQuadra, x, y, r);
+        int insideP3 = insideCirculo(xQuadra, yQuadra + hQuadra, x, y, r);
+        int insideP4 = insideCirculo(xQuadra + wQuadra, yQuadra + hQuadra, x, y, r);
+        
+        if(insideP1 == 1 && insideP2 == 1 && insideP3 == 1 && insideP4 == 1){
+            quadraSetCorBorda(getInfo(aux), cb);
+        }
+    }
+}
+
+void dq(Lista* listas, char* id, float r, int hashtag, int identificadorFigura){
+    char idAux[20];
+    float x = 0;
+    float y = 0;
+
+    for(int i = HIDRANTE; i <= RADIOBASE; i++){
+        for(Node aux = getFirst(listas[i]); aux != NULL; aux = getNext(aux)){
+            if(i == SEMAFORO){
+                strcpy(idAux, semaforoGetId(getInfo(aux)));
+            }
+            else if(i == HIDRANTE){
+                strcpy(idAux, hidranteGetId(getInfo(aux)));
+            }
+            else if(i == RADIOBASE){
+                strcpy(idAux, radioBaseGetId(getInfo(aux)));
+            }
+            if(strcmp(idAux, id) == 0){
+                if(i == SEMAFORO){
+                    x = semaforoGetX(getInfo(aux));
+                    y = semaforoGetY(getInfo(aux));
+                }
+                else if(i == HIDRANTE){
+                    x = hidranteGetX(getInfo(aux));
+                    y = hidranteGetY(getInfo(aux));
+                }
+                else if(i == RADIOBASE){
+                    x = radioBaseGetX(getInfo(aux));
+                    y = radioBaseGetY(getInfo(aux));
+                }
+                if(hashtag == 1){
+
+                    Node auxDelete = getFirst(listas[QUADRA]);
+                    while(auxDelete != NULL){
+                        float xQuadra = quadraGetX(getInfo(auxDelete));
+                        float yQuadra = quadraGetY(getInfo(auxDelete));
+                        float wQuadra = quadraGetWidth(getInfo(auxDelete));
+                        float hQuadra = quadraGetHeight(getInfo(auxDelete));
+
+                        int insideP1 = insideCirculo(xQuadra, yQuadra, x, y, r);
+                        int insideP2 = insideCirculo(xQuadra + wQuadra, yQuadra, x, y, r);
+                        int insideP3 = insideCirculo(xQuadra, yQuadra + hQuadra, x, y, r);
+                        int insideP4 = insideCirculo(xQuadra + wQuadra, yQuadra + hQuadra, x, y, r);
+
+                        Node tempAux = getNext(auxDelete);
+                        if(insideP1 == 1 && insideP2 == 1 && insideP3 == 1 && insideP4 == 1){
+                        free(auxDelete);
+                        }
+                        auxDelete = tempAux;
+                    }
+                }
+                else if(hashtag == 0){
+                    for(Node auxMudaCor = getFirst(listas[QUADRA]); auxMudaCor != NULL; auxMudaCor = getNext(auxMudaCor)){
+                        float xQuadra = quadraGetX(getInfo(auxMudaCor));
+                        float yQuadra = quadraGetY(getInfo(auxMudaCor));
+                        float wQuadra = quadraGetWidth(getInfo(auxMudaCor));
+                        float hQuadra = quadraGetHeight(getInfo(auxMudaCor));
+
+                        int insideP1 = insideCirculo(xQuadra, yQuadra, x, y, r);
+                        int insideP2 = insideCirculo(xQuadra + wQuadra, yQuadra, x, y, r);
+                        int insideP3 = insideCirculo(xQuadra, yQuadra + hQuadra, x, y, r);
+                        int insideP4 = insideCirculo(xQuadra + wQuadra, yQuadra + hQuadra, x, y, r);
+
+                        if(insideP1 == 1 && insideP2 == 1 && insideP3 == 1 && insideP4 == 1){
+                            quadraSetArredondado(getInfo(auxMudaCor), 1);
+                            quadraSetCorBorda(getInfo(auxMudaCor), "olive");
+                            quadraSetCorPreenchimento(getInfo(auxMudaCor), "beige");
+                        }
+
+                    }
+                }
+                insert(listas[CIRCULO], criaCirculo(identificadorFigura, 7, x, y, "blue", "none"));
+                insert(listas[CIRCULO], criaCirculo(identificadorFigura - 1, 8, x, y, "blue", "none"));
+                insert(listas[CIRCULO], criaCirculo(identificadorFigura - 2, r, x, y, "blue", "none"));
+            }
+        }
+    }
+}

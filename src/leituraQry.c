@@ -89,10 +89,19 @@ void readQry(Lista* listas, char* dirQry, CorPadrao cores){
         }
         
         // //T2_ED
-        // //dq
-        // if(strcmp(comando, "dq") == 0){
-            
-        // }
+        //dq
+        //isso funciona?
+        if(strcmp(comando, "dq") == 0){
+            char hashtag = getc(fileQry);
+            if(hashtag == '#'){
+                fscanf(fileQry, "%s %f", cep, &r);
+                dq(listas, cep, r, 1, id);
+            }
+            fseek(fileQry, -1, SEEK_CUR);
+            fscanf(fileQry, "%s %f", cep, &r);
+            dq(listas, cep, r, 1, id);
+            id -= 2;
+        }
         //del
         if(strcmp(comando, "del") == 0){
             fscanf(fileQry, "%s", cep);
@@ -101,6 +110,7 @@ void readQry(Lista* listas, char* dirQry, CorPadrao cores){
         //cbq    
         if(strcmp(comando, "cbq") == 0){
             fscanf(fileQry, "%f %f %f %s", &x, &y, &r, cb);
+            cbq(listas, x, y, r, cb);
         }   
         // //crd?      
         // if(strcmp(comando, "crd?") == 0){

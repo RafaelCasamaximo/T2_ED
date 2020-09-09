@@ -31,6 +31,19 @@ int main(int argc, char* argv[]){
     char* saidaSvgGeo = NULL;
     //Armazenar o caminho do arquivo.qry
     char* dirQry = NULL;
+    //Armazena o nome do arquivo.qry
+    char* nomeArquivoQry = NULL;
+    //Armazena o caminho de saida do svg do qry
+    char* saidaSvgQry = NULL;
+    //Armazena o nome do arquivo geo sem extensão
+    char* nomeGeoSemExtensao = NULL;
+    //Armazena o nome do arquivo qry sem extensão
+    char* nomeQrySemExtensao = NULL;
+    //Armazena o nome do arquivogeo-arquivoqry.svg
+    char* nomeGeoQry = NULL;
+    //Armazena o nome do caminho de saida do arquivo arquivogeo-arquivoqry.svg
+    char* dirSaidaGeoQry = NULL;
+    
 
     //Realiza a leitura dos parâmetros
     for(int i = 1; argc > i; i++){     
@@ -69,6 +82,14 @@ int main(int argc, char* argv[]){
     if(arqQry != NULL){
         concatenaCaminhos(dirEntrada, arqQry, &dirQry);
         readQry(listas, dirQry, cores);
+
+        extraiNome(arqGeo, &nomeGeoSemExtensao);
+        extraiNome(arqQry, &nomeQrySemExtensao);
+        concatenaNomeGeoQry(nomeGeoSemExtensao, nomeArquivoQry, ".svg", &nomeGeoQry);
+        concatenaCaminhos(dirSaida, nomeGeoQry, &dirSaidaGeoQry);
+
+        desenhaSvgQry(listas, cores, dirSaidaGeoQry);
+        
     }
 
     //Deleta todas as listas
@@ -92,6 +113,12 @@ int main(int argc, char* argv[]){
 
     free(nomeArquivoGeo);
     free(saidaSvgGeo);
+    free(saidaSvgQry);
+    free(nomeGeoSemExtensao);
+    free(nomeQrySemExtensao);
+
+    free(nomeGeoQry);
+    free(dirSaidaGeoQry);
 
     free(cores);
     return 0;

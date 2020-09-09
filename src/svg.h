@@ -5,5 +5,6 @@
 #include "corPadrao.h"
 
 void desenhaSvgGeo(Lista* listas, CorPadrao cores, char* dirSaida);
+void desenhaSvgQry(Lista* listas, CorPadrao cores, char* dirSaida);
 
 #endif

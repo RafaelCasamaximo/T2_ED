@@ -135,7 +135,7 @@ void readGeo(Lista* listas, char* dirGeo, CorPadrao cores){
 
             if(atual.nq < dft.nq){
                 atual.nq += 1;
-                quadraAux = criaQuadra(cep, x, y, w, h, coresPadraoGetBordaQuadras(cores), coresPadraoGetPreenchimentoQuadras(cores));
+                quadraAux = criaQuadra(cep, x, y, w, h, coresPadraoGetBordaQuadras(cores), coresPadraoGetPreenchimentoQuadras(cores), 0);
                 insert(listas[QUADRA], quadraAux);
             }
         }
