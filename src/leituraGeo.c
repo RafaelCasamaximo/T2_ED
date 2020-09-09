@@ -102,7 +102,7 @@ void readGeo(Lista* listas, char* dirGeo, CorPadrao cores){
 
             if(atual.i < dft.i){
                 atual.i += 1;
-                retanguloAux = criaRetangulo(id, x, y, w, h, cb, cp);
+                retanguloAux = criaRetangulo(id, x, y, w, h, cb, cp, 0);
                 insert(listas[RETANGULO], retanguloAux);
             }
 
@@ -135,7 +135,7 @@ void readGeo(Lista* listas, char* dirGeo, CorPadrao cores){
 
             if(atual.nq < dft.nq){
                 atual.nq += 1;
-                quadraAux = criaQuadra(cep, x, y, w, h);
+                quadraAux = criaQuadra(cep, x, y, w, h, coresPadraoGetBordaQuadras(cores), coresPadraoGetPreenchimentoQuadras(cores));
                 insert(listas[QUADRA], quadraAux);
             }
         }

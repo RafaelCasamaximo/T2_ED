@@ -3,7 +3,7 @@
 
 typedef void* Retangulo;
 
-Retangulo criaRetangulo(int id, float x, float y, float w, float h, char* cb, char* cp);
+Retangulo criaRetangulo(int id, float x, float y, float w, float h, char* cb, char* cp, int tracejado);
 
 //Setters
 void retanguloSetId(Retangulo retangulo, int id);
@@ -13,6 +13,7 @@ void retanguloSetWidth(Retangulo retangulo, float w);
 void retanguloSetHeight(Retangulo retangulo, float h);
 void retanguloSetCorBorda(Retangulo retangulo, char* cb);
 void retanguloSetCorPreenchimento(Retangulo retangulo, char* cp);
+void retanguloSetTracejado(Retangulo retangulo, int tracejado);
 
 
 //Getters
@@ -23,6 +24,7 @@ float retanguloGetWidth(Retangulo retangulo);
 float retanguloGetHeight(Retangulo retangulo);
 char* retanguloGetCorBorda(Retangulo retangulo);
 char* retanguloGetCorPreenchimento(Retangulo retangulo);
+int retanguloGetTracejado(Retangulo retangulo);
 
 
 #endif

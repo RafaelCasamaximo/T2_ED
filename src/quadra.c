@@ -9,9 +9,11 @@ typedef struct quadra{
     float y;
     float w;
     float h;
+    char cb[22];
+    char cp[22];
 }QuadraStruct;
 
-Quadra criaQuadra(char* cep, float x, float y, float w, float h){
+Quadra criaQuadra(char* cep, float x, float y, float w, float h, char* cb, char* cp){
     QuadraStruct* qad = (QuadraStruct*) malloc(sizeof(QuadraStruct));
 
     strcpy(qad->cep, cep);
@@ -19,6 +21,8 @@ Quadra criaQuadra(char* cep, float x, float y, float w, float h){
     qad->y = y;
     qad->w = w;
     qad->h = h;
+    strcpy(qad->cb, cb);
+    strcpy(qad->cp, cp);
 
     return qad; 
 }
@@ -44,6 +48,15 @@ void quadraSetHeight(Quadra quadra, float h){
     QuadraStruct* qad = (QuadraStruct*) quadra;
     qad->h = h;
 }
+void quadraSetCorBorda(Quadra quadra, char* cb){
+    QuadraStruct* qad = (QuadraStruct*) quadra;
+    strcpy(qad->cb, cb);
+}
+void quadraSetCorPreenchimento(Quadra quadra, char* cp){
+    QuadraStruct* qad = (QuadraStruct*) quadra;
+    strcpy(qad->cp, cp);
+}
+
 
 //Getters
 char* quadraGetCep(Quadra quadra){
@@ -65,4 +78,12 @@ float quadraGetWidth(Quadra quadra){
 float quadraGetHeight(Quadra quadra){
     QuadraStruct* qad = (QuadraStruct*) quadra;
     return qad->h;
+}
+char* quadraGetCorBorda(Quadra quadra){
+    QuadraStruct* qad = (QuadraStruct*) quadra;
+    return qad->cb;
+}
+char* quadraGetCorPreenchimento(Quadra quadra){
+    QuadraStruct* qad = (QuadraStruct*) quadra;
+    return qad->cp;
 }

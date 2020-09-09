@@ -11,15 +11,17 @@ typedef struct retangulo{
     float h;
     char cb[22];
     char cp[22];
+    int tracejado;
 }RetanguloStruct;
 
-Retangulo criaRetangulo(int id, float x, float y, float w, float h, char* cb, char* cp){
+Retangulo criaRetangulo(int id, float x, float y, float w, float h, char* cb, char* cp, int tracejado){
     RetanguloStruct* ret = (RetanguloStruct*) malloc(sizeof(RetanguloStruct));
     ret->id = id;
     ret->x = x;
     ret->y = y;
     ret->w = w;
     ret->h = h;
+    ret->tracejado = tracejado;
     strcpy(ret->cb, cb);
     strcpy(ret->cp, cp);
     
@@ -62,6 +64,11 @@ void retanguloSetCorPreenchimento(Retangulo retangulo, char* cp){
     strcpy(ret->cp, cp);
 }
 
+void retanguloSetTracejado(Retangulo retangulo, int tracejado){
+    RetanguloStruct* ret = (RetanguloStruct*) retangulo;
+    ret->tracejado = tracejado;
+}
+
 //Getters
 int retanguloGetId(Retangulo retangulo){
     RetanguloStruct* ret = (RetanguloStruct*) retangulo;
@@ -92,6 +99,10 @@ char* retanguloGetCorPreenchimento(Retangulo retangulo){
     return ret->cp;
 }
 
+int retanguloGetTracejado(Retangulo retangulo){
+    RetanguloStruct* ret = (RetanguloStruct*) retangulo;
+    return ret->tracejado;
+}
 
 
 
