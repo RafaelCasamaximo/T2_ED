@@ -4,7 +4,7 @@
 /*
 Calcula a distancia quadrada (entre dois pontos)
 Pré: As coordenadas dos dois pontos (x1, y1 e x2, y2)
-Pós: Retorna um float que é a distância dos dois pontos
+Pós: Retorna um float referente a distância dos dois pontos
 */
 float distanciaQuadrada(float x1, float  y1, float  x2, float  y2);
 

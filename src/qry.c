@@ -15,7 +15,7 @@
 
 enum LISTAS{CIRCULO, RETANGULO, TEXTO, LINHA, QUADRA, HIDRANTE, SEMAFORO, RADIOBASE};
 
-void pnt(Lista* listas, int j, char* cb, char* cp){
+void pnt(Lista* listas, int j, char* cb, char* cp, FILE* fileTxt){
     int id = 0;
 
     Info info;
@@ -36,14 +36,17 @@ void pnt(Lista* listas, int j, char* cb, char* cp){
                 if(i == CIRCULO){
                     circuloSetCorBorda(info, cb);
                     circuloSetCorPreenchimento(info, cp);
+                    fprintf(fileTxt, "pnt %s %s\n%f %f\n\n", cb, cp, circuloGetX(getInfo(aux)), circuloGetY(getInfo(aux)));
                 }
                 else if(i == RETANGULO){
                     retanguloSetCorBorda(info, cb);
                     retanguloSetCorPreenchimento(info, cp);
+                    fprintf(fileTxt, "pnt %s %s\n%f %f\n\n", cb, cp, retanguloGetX(getInfo(aux)), retanguloGetY(getInfo(aux)));
                 }
                 else if(i == TEXTO){
                     textoSetCorBorda(info, cb);
                     textoSetCorPreenchimento(info, cp);
+                    fprintf(fileTxt, "pnt %s %s\n%f %f\n\n", cb, cp, textoGetX(getInfo(aux)), textoGetY(getInfo(aux)));
                 }
                 return;
             }
@@ -51,10 +54,10 @@ void pnt(Lista* listas, int j, char* cb, char* cp){
     }
 }
 
-void pntAst(Lista* listas, int j, int k, char* cb, char* cp){
+void pntAst(Lista* listas, int j, int k, char* cb, char* cp, FILE* fileTxt){
     
     for(int i = min(j, k); i <= max(j, k); i++){
-        pnt(listas, i, cb, cp);
+        pnt(listas, i, cb, cp, fileTxt);
     }
 }
  
@@ -103,9 +106,11 @@ int insideRetangulo(float x, float y, float rx, float ry, float rw, float rh){
     return ((x > rx && x < rx + rw) && (y > ry && y < ry + rh) ? 1 : 0);
 }
 
-int iInt(Lista* listas, int j, float x, float y, float* centroDeMassaX, float* centroDeMassaY){
+int iInt(Lista* listas, int j, float x, float y, float* centroDeMassaX, float* centroDeMassaY, FILE* fileTxt){
     int id = 0;
     
+    fprintf(fileTxt, "i? %d %f %f\n", j, x, y);
+
     for(int i = 0; i < 2; i++){
         for(Node aux = getFirst(listas[i]); aux != NULL; aux = getNext(aux)){
             Info info = getInfo(aux);
@@ -119,12 +124,16 @@ int iInt(Lista* listas, int j, float x, float y, float* centroDeMassaX, float* c
                 if(i == CIRCULO){
                     *centroDeMassaX = circuloGetX(info);
                     *centroDeMassaY = circuloGetY(info);
-                    return insideCirculo(x, y, circuloGetX(info), circuloGetY(info), circuloGetRaio(info));
+                    int resultado = insideCirculo(x, y, circuloGetX(info), circuloGetY(info), circuloGetRaio(info));
+                    fprintf(fileTxt, "CIRCULO %s\n\n", resultado == 1 ? "CONTÉM" : "NÃO CONTÉM");
+                    return resultado;
                 }
                 else if(i == RETANGULO){
                     *centroDeMassaX = retanguloGetX(info) + (retanguloGetWidth(info) / 2);
                     *centroDeMassaY = retanguloGetY(info) + (retanguloGetHeight(info) / 2);
-                    return insideRetangulo(x, y, retanguloGetX(info), retanguloGetY(info), retanguloGetWidth(info), retanguloGetHeight(info));
+                    int resultado = insideRetangulo(x, y, retanguloGetX(info), retanguloGetY(info), retanguloGetWidth(info), retanguloGetHeight(info));
+                    fprintf(fileTxt, "CIRCULO %s\n\n", resultado == 1 ? "CONTÉM" : "NÃO CONTÉM");
+                    return resultado;
                 }
             }
         }
@@ -200,7 +209,7 @@ int overlayRetanguloRetangulo(Retangulo r1, Retangulo r2){
     return 0;
 }
 
-int oInt(Lista* listas, int j, int k, float* x, float* y, float* w, float* h){
+int oInt(Lista* listas, int j, int k, float* x, float* y, float* w, float* h, FILE* fileTxt){
     float vX[4] = {0, 0, 0, 0};
     float vY[4] = {0, 0, 0, 0};
     
@@ -210,6 +219,8 @@ int oInt(Lista* listas, int j, int k, float* x, float* y, float* w, float* h){
     int tipoJ = -1;
     Info infoK = NULL;
     int tipoK = -1;
+
+    fprintf(fileTxt, "o? %d %d\n", j, k);
 
     int idAux = 0;
 
@@ -265,18 +276,23 @@ int oInt(Lista* listas, int j, int k, float* x, float* y, float* w, float* h){
 
     if(tipoJ == CIRCULO && tipoK == CIRCULO){
         overlay = overlayCirculoCirculo(infoJ, infoK);
+        fprintf(fileTxt, "CIRCULO CIRCULO %s\n\n", overlay == 1 ? "SOBREPÕE" : "NÃO SOBREPÕE");
         return overlay;
     }
     else if(tipoJ == RETANGULO && tipoK == RETANGULO){
         overlay = overlayRetanguloRetangulo(infoJ, infoK);
+        fprintf(fileTxt, "RETANGULO RETANGULO %s\n\n", overlay == 1 ? "SOBREPÕE" : "NÃO SOBREPÕE");
         return overlay;
     }
     else if(tipoJ == CIRCULO && tipoK == RETANGULO){
         overlay = overlayCirculoRetangulo(infoJ, infoK);
+        fprintf(fileTxt, "CIRCULO RETANGULO %s\n\n", overlay == 1 ? "SOBREPÕE" : "NÃO SOBREPÕE");
+
         return overlay;
     }
     else if(tipoJ == RETANGULO && tipoK == CIRCULO){
         overlay = overlayCirculoRetangulo(infoK, infoJ);
+        fprintf(fileTxt, "RETANGULO CIRCULO %s\n\n", overlay == 1 ? "SOBREPÕE" : "NÃO SOBREPÕE");
         return overlay;
     }
     return -1;

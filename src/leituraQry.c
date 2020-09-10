@@ -52,7 +52,7 @@ void readQry(Lista* listas, char* dirQry, char* dirTxt){
         //o?
         if(strcmp(comando, "o?") == 0){
             fscanf(fileQry, "%d %d", &j, &k);
-            sobrepoe = oInt(listas, j, k, &x, &y, &w, &h);
+            sobrepoe = oInt(listas, j, k, &x, &y, &w, &h, fileTxt);
             if(sobrepoe == 0){
                 retanguloAux = criaRetangulo(id, x, y, w, h, "black", "none", 1);
                 insert(listas[RETANGULO], retanguloAux);
@@ -66,7 +66,7 @@ void readQry(Lista* listas, char* dirQry, char* dirTxt){
         //i?        
         if(strcmp(comando, "i?") == 0){
             fscanf(fileQry, "%d %f %f", &j, &x, &y);
-            interno = iInt(listas, j, x, y, &centroDeMassaX, &centroDeMassaY);
+            interno = iInt(listas, j, x, y, &centroDeMassaX, &centroDeMassaY, fileTxt);
             if(interno == 1){ //dentro
                 linhaAux = criaLinha(x, y, centroDeMassaX, centroDeMassaY, 1, 1, "0");
             }
@@ -80,13 +80,13 @@ void readQry(Lista* listas, char* dirQry, char* dirTxt){
         //pnt
         if(strcmp(comando, "pnt") == 0){
             fscanf(fileQry, "%d %s %s", &j, cb, cp);
-            pnt(listas, j, cb, cp);
+            pnt(listas, j, cb, cp, fileTxt);
 
         }
         //pnt*
         if(strcmp(comando, "pnt*") == 0){
             fscanf(fileQry, "%d %d %s %s", &j, &k, cb, cp);
-            pntAst(listas, j, k, cb, cp);
+            pntAst(listas, j, k, cb, cp, fileTxt);
         }
         //delf
         if(strcmp(comando, "delf") == 0){
@@ -136,5 +136,6 @@ void readQry(Lista* listas, char* dirQry, char* dirTxt){
         id--;
     }
 
+    fclose(fileTxt);
     fclose(fileQry);
 }
