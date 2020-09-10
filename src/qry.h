@@ -29,4 +29,6 @@ void cbq(Lista* listas, float x, float y, float r, char* cb);
 
 void dq(Lista* listas, char* id, float r, int hashtag, int identificadorFigura);
 
+void car(Lista* listas, float x, float y, float w, float h, int id);
+
 #endif

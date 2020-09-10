@@ -24,5 +24,6 @@ float quadraGetHeight(Quadra quadra);
 char* quadraGetCorBorda(Quadra quadra);
 char* quadraGetCorPreenchimento(Quadra quadra);
 int quadraGetArredondado(Quadra quadra);
+float quadraGetArea(Quadra quadra);
 
 #endif

@@ -11,7 +11,15 @@
 
 enum LISTAS{CIRCULO, RETANGULO, TEXTO, LINHA, QUADRA, HIDRANTE, SEMAFORO, RADIOBASE};
 
-void readQry(Lista* listas, char* dirQry, CorPadrao cores){
+void readQry(Lista* listas, char* dirQry, char* dirTxt){
+
+    FILE* fileTxt = NULL;
+    fileTxt = fopen(dirTxt, "w");
+    if(!fileTxt){
+        exit(1);
+    }
+    printf("Arquivo TXT aberto com sucesso!");
+
     FILE* fileQry = NULL;
     fileQry = fopen(dirQry, "r");
     if(!fileQry){
@@ -21,7 +29,6 @@ void readQry(Lista* listas, char* dirQry, CorPadrao cores){
 
     int id = -1;
     
-
     int j = 0, k = 0;
     int interno = 0;
     int sobrepoe = 0;
@@ -46,8 +53,12 @@ void readQry(Lista* listas, char* dirQry, CorPadrao cores){
         if(strcmp(comando, "o?") == 0){
             fscanf(fileQry, "%d %d", &j, &k);
             sobrepoe = oInt(listas, j, k, &x, &y, &w, &h);
-            if(sobrepoe == 0 || sobrepoe == 1){
-                retanguloAux = criaRetangulo(id, x, y, w, h, "black", "none", sobrepoe);
+            if(sobrepoe == 0){
+                retanguloAux = criaRetangulo(id, x, y, w, h, "black", "none", 1);
+                insert(listas[RETANGULO], retanguloAux);
+            }
+            if(sobrepoe == 1){
+                retanguloAux = criaRetangulo(id, x, y, w, h, "black", "none", 0);
                 insert(listas[RETANGULO], retanguloAux);
             }
             printf("%d", sobrepoe);
@@ -57,10 +68,10 @@ void readQry(Lista* listas, char* dirQry, CorPadrao cores){
             fscanf(fileQry, "%d %f %f", &j, &x, &y);
             interno = iInt(listas, j, x, y, &centroDeMassaX, &centroDeMassaY);
             if(interno == 1){ //dentro
-                linhaAux = criaLinha(x, y, centroDeMassaX, centroDeMassaY, 1, 1);
+                linhaAux = criaLinha(x, y, centroDeMassaX, centroDeMassaY, 1, 1, "0");
             }
             else if(interno == 0 || interno == 2){ //Fora e/ou borda
-                linhaAux = criaLinha(x, y, centroDeMassaX, centroDeMassaY, 1, 0);
+                linhaAux = criaLinha(x, y, centroDeMassaX, centroDeMassaY, 1, 0, "0");
             }
             if(interno == 1 || interno == 0 || interno == 2){
                 insert(listas[LINHA], linhaAux);
@@ -93,13 +104,14 @@ void readQry(Lista* listas, char* dirQry, CorPadrao cores){
         //isso funciona?
         if(strcmp(comando, "dq") == 0){
             char hashtag = getc(fileQry);
+            hashtag = getc(fileQry);
             if(hashtag == '#'){
                 fscanf(fileQry, "%s %f", cep, &r);
                 dq(listas, cep, r, 1, id);
             }
-            fseek(fileQry, -1, SEEK_CUR);
+            fseek(fileQry, -2, SEEK_CUR);
             fscanf(fileQry, "%s %f", cep, &r);
-            dq(listas, cep, r, 1, id);
+            dq(listas, cep, r, 0, id);
             id -= 2;
         }
         //del
@@ -112,14 +124,15 @@ void readQry(Lista* listas, char* dirQry, CorPadrao cores){
             fscanf(fileQry, "%f %f %f %s", &x, &y, &r, cb);
             cbq(listas, x, y, r, cb);
         }   
-        // //crd?      
+        //crd?      
         // if(strcmp(comando, "crd?") == 0){
 
         // }
-        // //car
-        // if(strcmp(comando, "car") == 0){
-
-        // }   
+        //car
+        if(strcmp(comando, "car") == 0){
+            fscanf(fileQry, "%f %f %f %f", &x, &y, &w, &h);
+            car(listas, x, y, w, h, id);
+        }   
         id--;
     }
 

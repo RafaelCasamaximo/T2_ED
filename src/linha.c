@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "linha.h"
 
@@ -10,9 +11,10 @@ typedef struct linha{
     float y2;
     int pntInicial;
     int interna;
+    char cep[22];
 }LinhaStruct;
 
-Linha criaLinha(float x1, float y1, float x2, float y2, int pntInicial, int interna){
+Linha criaLinha(float x1, float y1, float x2, float y2, int pntInicial, int interna, char* cep){
     LinhaStruct* lin = (LinhaStruct*) malloc(sizeof(LinhaStruct));
 
     lin->x1 = x1;
@@ -21,6 +23,7 @@ Linha criaLinha(float x1, float y1, float x2, float y2, int pntInicial, int inte
     lin->y2 = y2;
     lin->pntInicial = pntInicial;
     lin->interna = interna;
+    strcpy(lin->cep, cep);
 
     return lin;
 }
@@ -51,6 +54,11 @@ void linhaSetInterna(Linha linha, int interna){
     lin->interna = interna;
 }
 
+void linhaSetCep(Linha linha, char* cep){
+    LinhaStruct* lin = (LinhaStruct*) linha;
+    strcpy(lin->cep, cep);
+}
+
 //Getters
 float linhaGetX1(Linha linha){
     LinhaStruct* lin = (LinhaStruct*) linha;
@@ -75,4 +83,8 @@ int linhaGetPntInicial(Linha linha){
 int linhaGetInterna(Linha linha){
     LinhaStruct* lin = (LinhaStruct*) linha;
     return lin->interna;
+}
+char* linhaGetCep(Linha linha){
+    LinhaStruct* lin = (LinhaStruct*) linha;
+    return lin->cep;
 }

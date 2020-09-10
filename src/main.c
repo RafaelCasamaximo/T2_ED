@@ -16,7 +16,7 @@
 enum LISTAS{CIRCULO, RETANGULO, TEXTO, LINHA, QUADRA, HIDRANTE, SEMAFORO, RADIOBASE};
 
 int main(int argc, char* argv[]){
-    CorPadrao cores = criaCorPadrao("2", "coral", "saddlebrown", "2", "red", "darkred", "2", "deeppink", "mediumvioletred", "2", "green", "red", "2", "2");
+    CorPadrao cores = criaCorPadrao("0.5", "coral", "saddlebrown", "0.5", "red", "darkred", "0.5", "deeppink", "mediumvioletred", "0.5", "green", "red", "0.5", "0.5");
     
     char* dirEntrada = NULL;
     char* arqGeo = NULL;
@@ -31,8 +31,6 @@ int main(int argc, char* argv[]){
     char* saidaSvgGeo = NULL;
     //Armazenar o caminho do arquivo.qry
     char* dirQry = NULL;
-    //Armazena o nome do arquivo.qry
-    char* nomeArquivoQry = NULL;
     //Armazena o caminho de saida do svg do qry
     char* saidaSvgQry = NULL;
     //Armazena o nome do arquivo geo sem extensão
@@ -43,6 +41,10 @@ int main(int argc, char* argv[]){
     char* nomeGeoQry = NULL;
     //Armazena o nome do caminho de saida do arquivo arquivogeo-arquivoqry.svg
     char* dirSaidaGeoQry = NULL;
+    //Armazena o nome do arquivo geo-qry.txt
+    char* nomeArquivoLogTxt = NULL;
+    //Armazena o caminho para a geração do TXT
+    char* dirTxt = NULL;
     
 
     //Realiza a leitura dos parâmetros
@@ -80,18 +82,21 @@ int main(int argc, char* argv[]){
     desenhaSvgGeo(listas, cores, saidaSvgGeo);
 
     if(arqQry != NULL){
+        //oi te amo ta ai?
         concatenaCaminhos(dirEntrada, arqQry, &dirQry);
-        readQry(listas, dirQry, cores);
 
         extraiNome(arqGeo, &nomeGeoSemExtensao);
         extraiNome(arqQry, &nomeQrySemExtensao);
-        concatenaNomeGeoQry(nomeGeoSemExtensao, nomeArquivoQry, ".svg", &nomeGeoQry);
+        concatenaNomeGeoQry(nomeGeoSemExtensao, nomeQrySemExtensao, ".svg", &nomeGeoQry);
         concatenaCaminhos(dirSaida, nomeGeoQry, &dirSaidaGeoQry);
+        concatenaNomeGeoQry(nomeGeoSemExtensao, nomeQrySemExtensao, ".txt", &nomeArquivoLogTxt);
+        concatenaCaminhos(dirSaida, nomeArquivoLogTxt, &dirTxt);
+
+        readQry(listas, dirQry, dirTxt);
 
         desenhaSvgQry(listas, cores, dirSaidaGeoQry);
         
     }
-
     //Deleta todas as listas
     for(int i = 0; i < 8; i++){
         //Caso a lista seja uma lista de texto, deleta todos os textos alocados
@@ -102,24 +107,21 @@ int main(int argc, char* argv[]){
         }
         removeList(listas[i]);
     }
-
     free(dirEntrada);
     free(arqGeo);
     free(arqQry);
     free(dirSaida);
-
     free(dirGeo);
     free(dirQry);
-
     free(nomeArquivoGeo);
     free(saidaSvgGeo);
     free(saidaSvgQry);
     free(nomeGeoSemExtensao);
     free(nomeQrySemExtensao);
-
     free(nomeGeoQry);
     free(dirSaidaGeoQry);
-
+    free(nomeArquivoLogTxt);
+    free(dirTxt);
     free(cores);
     return 0;
 }

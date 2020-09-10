@@ -97,3 +97,8 @@ int quadraGetArredondado(Quadra quadra){
     QuadraStruct* qad = (QuadraStruct*) quadra;
     return qad->arredondado;
 }
+
+float quadraGetArea(Quadra quadra){
+    QuadraStruct* qad = (QuadraStruct*) quadra;
+    return (qad->w * qad->h);
+}

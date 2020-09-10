@@ -7,6 +7,7 @@
 #include "retangulo.h"
 #include "texto.h"
 #include "quadra.h"
+#include "linha.h"
 #include "hidrante.h"
 #include "semaforo.h"
 #include "radioBase.h"
@@ -128,10 +129,8 @@ int iInt(Lista* listas, int j, float x, float y, float* centroDeMassaX, float* c
             }
         }
     }
-    
     return -1;
 }
-
 int overlayCirculoRetangulo(Circulo c, Retangulo r){
     float dX = circuloGetX(c) - maxF(retanguloGetX(r), minF(circuloGetX(c), retanguloGetX(r) + retanguloGetWidth(r)));
     float dY = circuloGetY(c) - maxF(retanguloGetY(r), minF(circuloGetY(c), retanguloGetY(r) + retanguloGetHeight(r)));
@@ -287,20 +286,30 @@ void del(Lista* listas, char* cep){
     for(int i = QUADRA; i <= RADIOBASE; i++){
         for(Node aux = getFirst(listas[i]); aux != NULL; aux = getNext(aux)){
             char id[20];
+            float x = 0, y = 0;
             if(i == QUADRA){
                 strcpy(id, quadraGetCep(getInfo(aux)));
+                x = quadraGetX(getInfo(aux));
+                y = quadraGetY(getInfo(aux));
             }
             else if(i == HIDRANTE){
                 strcpy(id, hidranteGetId(getInfo(aux)));
+                x = hidranteGetX(getInfo(aux));
+                y = hidranteGetY(getInfo(aux));
             }
             else if(i == SEMAFORO){
                 strcpy(id, semaforoGetId(getInfo(aux)));
+                x = semaforoGetX(getInfo(aux));
+                y = semaforoGetY(getInfo(aux));
             }
             else if(i == RADIOBASE){
                 strcpy(id, radioBaseGetId(getInfo(aux)));
+                x = radioBaseGetX(getInfo(aux));
+                y = radioBaseGetY(getInfo(aux));
             }
 
             if(strcmp(id, cep) == 0){
+                insert(listas[LINHA], criaLinha(x, y, x, 0, 0, 0, id));
                 removeNode(listas[i], aux);
                 return;
             }
@@ -379,7 +388,7 @@ void dq(Lista* listas, char* id, float r, int hashtag, int identificadorFigura){
 
                         Node tempAux = getNext(auxDelete);
                         if(insideP1 == 1 && insideP2 == 1 && insideP3 == 1 && insideP4 == 1){
-                        free(auxDelete);
+                        removeNode(listas[QUADRA], auxDelete);
                         }
                         auxDelete = tempAux;
                     }
@@ -405,9 +414,72 @@ void dq(Lista* listas, char* id, float r, int hashtag, int identificadorFigura){
                     }
                 }
                 insert(listas[CIRCULO], criaCirculo(identificadorFigura, 7, x, y, "blue", "none"));
-                insert(listas[CIRCULO], criaCirculo(identificadorFigura - 1, 8, x, y, "blue", "none"));
+                insert(listas[CIRCULO], criaCirculo(identificadorFigura - 1, 11, x, y, "blue", "none"));
                 insert(listas[CIRCULO], criaCirculo(identificadorFigura - 2, r, x, y, "blue", "none"));
             }
         }
     }
+}
+
+void car(Lista* listas, float x, float y, float w, float h, int id){
+    float areaTotal = 0;
+    char areaFiguraString[10];
+    char areaString[22];
+
+    int counter = id;
+
+    for(int i = QUADRA; i <= RADIOBASE; i++){
+        for(Node aux = getFirst(listas[i]); aux != NULL; aux = getNext(aux)){
+            counter--;
+            if(i == QUADRA){
+                float xQuadra = quadraGetX(getInfo(aux));
+                float yQuadra = quadraGetY(getInfo(aux));
+                float wQuadra = quadraGetWidth(getInfo(aux));
+                float hQuadra = quadraGetHeight(getInfo(aux));
+
+                int insideP1 = insideRetangulo(xQuadra, yQuadra, x, y, w, h);
+                int insideP2 = insideRetangulo(xQuadra + wQuadra, yQuadra, x, y, w, h);
+                int insideP3 = insideRetangulo(xQuadra, yQuadra + hQuadra, x, y, w, h);
+                int insideP4 = insideRetangulo(xQuadra + wQuadra, yQuadra + hQuadra, x, y, w, h);
+
+                if(insideP1 == 1 && insideP2 == 1 && insideP3 == 1 && insideP4 == 1){
+                    areaTotal += quadraGetArea(getInfo(aux));
+                    sprintf(areaFiguraString, "%f", quadraGetArea(getInfo(aux)));
+                    insert(listas[TEXTO], criaTexto(counter, xQuadra + (wQuadra/2), yQuadra + (hQuadra/2), "seashell", "black", areaFiguraString, 10));
+                }
+            }
+            else if(i == HIDRANTE){
+                float xH = hidranteGetX(getInfo(aux));
+                float yH = hidranteGetY(getInfo(aux));
+                int p = insideRetangulo(xH, yH, x, y, w, h);
+
+                if(p == 1){
+                    areaTotal += 28.27;
+                    insert(listas[TEXTO], criaTexto(counter, xH , yH, "seashell", "black", "28.27", 6));
+                }
+            }
+            else if(i == SEMAFORO){
+                float xS = semaforoGetX(getInfo(aux));
+                float yS = semaforoGetY(getInfo(aux));
+                int p = insideRetangulo(yS, yS, x, y, w, h);
+                if(p == 1){
+                    areaTotal += 28.27;
+                    insert(listas[TEXTO], criaTexto(counter, xS , yS, "seashell", "black", "28.27", 6));
+                }
+            }
+            else if(i == RADIOBASE){
+                float xR = semaforoGetX(getInfo(aux));
+                float yR = semaforoGetY(getInfo(aux));
+                int p = insideRetangulo(xR, yR, x, y, w, h);
+                if(p == 1){
+                    areaTotal += 28.27;
+                    insert(listas[TEXTO], criaTexto(counter, xR , yR, "seashell", "black", "28.27", 6));
+                }
+            }
+        }
+    }
+
+    sprintf(areaString, "%f", areaTotal);
+    insert(listas[RETANGULO], criaRetangulo(counter-50, x, y, w, h, "black", "none", 0));
+    insert(listas[LINHA], criaLinha(x, y, x, 0, 0, 0, areaString));
 }
